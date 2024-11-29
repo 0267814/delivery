@@ -1,8 +1,8 @@
 import Container from 'react-bootstrap/Container';
 import Nav from 'react-bootstrap/Nav';
 import Navbar from 'react-bootstrap/Navbar';
+import NavDropdown from 'react-bootstrap/NavDropdown'
 import { useMyContext,signOut } from '../context/Provider';
-import Button from 'react-bootstrap/Button';
 import { useNavigate } from 'react-router-dom';
 
 function AppNavbar() {
@@ -10,8 +10,17 @@ function AppNavbar() {
   const navigate = useNavigate();
 
   const submit = (e) => {
-    signOut(dispatch);
-    navigate('/');  
+    switch (e) {
+      case 'signOut':
+        signOut(dispatch);
+        navigate('/');
+        break;
+      case 'changePassword':
+        navigate('/changePassword'); 
+        break;
+      default:
+        console.log('Unknown action:', e);
+    }  
   };
 
   return (
@@ -41,9 +50,10 @@ function AppNavbar() {
             {!state.signin ? (
               <Nav.Link href="/signIn">Sign In</Nav.Link>
             ) : (
-              <>
-              <Button type="button" className="cancel-button" onClick={() => submit()}>Sign Out</Button>
-              </>
+              <NavDropdown title="Profile" id="basic-nav-dropdown">
+                <NavDropdown.Item onClick={()=>submit('signOut')}>Sign Out</NavDropdown.Item>
+                <NavDropdown.Item onClick={()=>submit('changePassword')}>Change Password</NavDropdown.Item>
+              </NavDropdown>
             )}
           </Nav>
         </Navbar.Collapse>

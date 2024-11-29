@@ -12,7 +12,8 @@ function Provider({children}){
         signin: false,
         posts: [],
         chatBotMessages: [],
-        userMessages: []
+        userMessages: [],
+        email: null,
     }
     
     const [state, dispatch] = useReducer(Reducer, initialState);
@@ -20,8 +21,8 @@ function Provider({children}){
     useEffect(() => {
         const storedState = JSON.parse(localStorage.getItem('appState'));
         
-        if (storedState) {
-          dispatch({ type: SIGN_IN, payload: storedState });
+        if (storedState && storedState.email) {
+            dispatch({ type: SIGN_IN, payload: storedState.email });
         }
       }, []);
     
@@ -44,42 +45,33 @@ function useMyContext(){
     return useContext(Context);
 }
 
-async function signUp(dispatch,email,password){
+async function signUp(dispatch,email,password,setError){
     try{
-        const data = await api.post(`${port.connection}/signUp`,{ email, password });
+        await api.post(`${port.connection}/signUp`,{ email, password });
         dispatch({
                 type: SIGN_UP,
             });
                         
     } catch(err){
-        console.log(err)
+        setError('Email already in use');
     }
 
 }
 
-async function signIn(dispatch, email, password) {
-
+async function signIn(dispatch, email, password, setError) {
     try {
-
-        console.log('hola 1', email, password);
-        const res = await axios.post(`${port.connection}/signIn`,{ email, password });
-        console.log('hola 2');
+        const res = await axios.post(`${port.connection}/signIn`, { email, password });
 
         dispatch({
             type: SIGN_IN,
-            payload: res.data.name,
+            payload: email,
         });
-        console.log('hola 3');
 
-        localStorage.setItem('appState', JSON.stringify({ name: res.data.name, signin: true }));
-
-        console.log('hola 4');
-
+        localStorage.setItem('appState', JSON.stringify({ name: res.data.name, signin: true, email }));
     } catch (err) {
-        console.error('Error in signIn:', err.response || err);  
+        setError('Email or password is incorrect');
     }
 }
-
 
 async function signOut(dispatch){
     try{
@@ -122,9 +114,21 @@ async function getPosts(dispatch){
     }
 }
 
+async function changePassword(dispatch,password,confirm,email,setError){
+    try{
+        await api.post(`${port.connection}/changePassword`,{password,confirm,email});
+        
+        dispatch({
+            type: SIGN_OUT,
+        }); 
+                        
+    } catch(err){
+        setError("Passwords do not match");
+    }
+}
+
 async function chatBot(dispatch,message){
     try{
-        console.log(message);
         const res = await api.post(`${port.connection}/chatBot`,{message});
         const { chatBotMessages, userMessages, error } = res.data;
 
@@ -139,4 +143,4 @@ async function chatBot(dispatch,message){
 }
 
 export default Provider;
-export {useMyContext,signUp,addPost,getPosts,signIn,signOut,chatBot};
+export {useMyContext,signUp,addPost,getPosts,signIn,signOut,chatBot,changePassword};

@@ -15,6 +15,7 @@ import SignIn from './components/SignIn';
 import SignUp from './components/SignUp';
 import Assesment2 from './components/Assesment2';
 import Community2 from './components/Community2';
+import Password from './components/Password';
 
 function App() {
 
@@ -34,6 +35,7 @@ function App() {
         <Route path='/post' element={<Post/>}/>
         <Route path='/signIn' element={<SignIn/>}/>
         <Route path='/signUp' element={<SignUp/>}/>
+        <Route path='/changePassword' element={<Password/>}/>
         <Route path='*' element={<Navigate to='/'/>}/>
       </Routes>
       <AppFooter/>

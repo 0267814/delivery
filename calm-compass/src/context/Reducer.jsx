@@ -4,7 +4,7 @@ import{
     GET_POSTS,
     SIGN_IN,
     SIGN_OUT,
-    CHAT_BOT
+    CHAT_BOT,
 } from './actions';
 
 function Reducer(state,action){
@@ -17,12 +17,14 @@ function Reducer(state,action){
             return{
                 ...state,
                 signin: true,
+                email:action.payload
             };
         case SIGN_OUT:
             return{
                 signin: false,
                 chatBotMessages: [],
-                userMessages: []
+                userMessages: [],
+                email: null
             };
         case ADD_POST:
             return{
