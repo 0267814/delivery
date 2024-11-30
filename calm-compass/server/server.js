@@ -3,8 +3,11 @@ const express = require('express');
 const mongoose = require("mongoose");
 const { GoogleGenerativeAI } = require('@google/generative-ai');
 const KEY = process.env.KEY;
+const USER = process.env.USER;
+const DB_KEY = process.env.DB_KEY;
+
 const genAI = new GoogleGenerativeAI(KEY);
-// const cors = require('cors');
+const cors = require('cors');
 
 //const allowedOrigins =  ["https://calm-compass.onrender.com"]
 // const allowedOrigins = ["https://calm-compass.onrender.com", "http://localhost:3000"];
@@ -27,13 +30,13 @@ const model = genAI.getGenerativeModel({
 });
 
 //app.use();
-//app.use(cors());
+app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({extended:true}));
 var userMessages = [];
 var chatBotMessages = [];
 
-const uri =`mongodb+srv://0264547:PtRTk33hxe3KNT@cluster0.rld85.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0`;
+const uri =`mongodb+srv://${USER}:${DB_KEY}@cluster0.rld85.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0`;
 
 mongoose
   .connect(uri)

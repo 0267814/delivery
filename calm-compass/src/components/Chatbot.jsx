@@ -15,15 +15,20 @@ function Chatbot() {
     const combinedMessages = [];
     state.userMessages.forEach((userMsg, index) => {
         combinedMessages.push({ type: "user", text: userMsg });
+
         if (state.chatBotMessages[index]) {
             combinedMessages.push({ type: "bot", text: state.chatBotMessages[index] });
         }
     });
 
     return (
+
+        <div>
+            <h1><b>Say hi to Amadeus!!!</b></h1>
+
         <div className="chat_bot_container">
             <div className="chat_bot_content_box">
-                <div id="chat_bot_scrolleables_container">
+                <div className="chat_bot_scrolleables_container">
 
                     {combinedMessages.map((msg, index) => (
                         <div key={`message-${index}`} className="chat_bubble_container">
@@ -35,19 +40,18 @@ function Chatbot() {
                 </div>
 
             </div>
-            <div className="chat_bot_footer">
                 <div className="chat_bot_input_container">
                     <form onSubmit={submit}>
                         <input
                             type="text"
-                            id="chat_bot_input_box_text"
+                            className="chat_bot_input_box_text"
                             name="message"
                             placeholder="Message"
                             autoFocus
                             value={message}
                             onChange={(e) => setMessage(e.target.value)}
                         />
-                        <button type="submit" id="chat_bot_input_box_button">Send</button>
+                        <button type="submit" className="chat_bot_input_box_button">Send</button>
                     </form>
                 </div>
             </div>
