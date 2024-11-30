@@ -4,17 +4,17 @@ const mongoose = require("mongoose");
 const { GoogleGenerativeAI } = require('@google/generative-ai');
 const KEY = process.env.KEY;
 const genAI = new GoogleGenerativeAI(KEY);
-const cors = require('cors');
+// const cors = require('cors');
 
 //const allowedOrigins =  ["https://calm-compass.onrender.com"]
-const allowedOrigins = ["https://calm-compass.onrender.com", "http://localhost:3000"];
+// const allowedOrigins = ["https://calm-compass.onrender.com", "http://localhost:3000"];
 
 
-const corsOptions = {
-    origin: allowedOrigins,  // Solo permitir solicitudes desde este origen
-    methods: ['GET', 'POST', 'PUT', 'DELETE'],
-    allowedHeaders: ['Content-Type', 'Authorization'], // Si estás enviando headers adicionales
-};
+// const corsOptions = {
+//     origin: allowedOrigins,  // Solo permitir solicitudes desde este origen
+//     methods: ['GET', 'POST', 'PUT', 'DELETE'],
+//     allowedHeaders: ['Content-Type', 'Authorization'], // Si estás enviando headers adicionales
+// };
 
 const app = express();
 
@@ -27,7 +27,7 @@ const model = genAI.getGenerativeModel({
     },
 });
 
-app.use(cors());
+//app.use();
 app.use(express.json());
 app.use(express.urlencoded({extended:true}));
 var userMessages = [];
