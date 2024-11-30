@@ -6,13 +6,14 @@ export const GET_POSTS = "GETPOSTS";
 export const CHAT_BOT = "CHATBOT";
 
 // Configuración del puerto o URL del backend
-const isProduction = window.location.hostname !== "localhost"; // Detectar si no estás en local
+var port = { connection: "http://localhost:5000" }; // Desarrollo local
 
-var port = {
-    connection: isProduction
-        ? "https://delivery-6bl0.onrender.com" // URL del backend en producción
-        : "http://localhost:5000", // URL del backend local
-};
+// Cambiar la conexión para producción
+if (process.env.NODE_ENV === "production") {
+    port = {
+        connection: "https://delivery-6bl0.onrender.com", 
+    };
+}
 
 export var port;
 

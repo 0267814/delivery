@@ -6,6 +6,14 @@ const KEY = process.env.KEY;
 const genAI = new GoogleGenerativeAI(KEY);
 const cors = require('cors');
 
+const allowedOrigins = ["https://calm-compass.onrender.com"];
+
+const corsOptions = {
+    origin: allowedOrigins,  // Solo permitir solicitudes desde este origen
+    methods: ['GET', 'POST', 'PUT', 'DELETE'],
+    allowedHeaders: ['Content-Type', 'Authorization'], // Si estás enviando headers adicionales
+};
+
 const app = express();
 
 const model = genAI.getGenerativeModel({
@@ -17,7 +25,7 @@ const model = genAI.getGenerativeModel({
     },
 });
 
-app.use(cors());
+app.use(cors(corsOptions));
 app.use(express.json());
 app.use(express.urlencoded({extended:true}));
 var userMessages = [];
