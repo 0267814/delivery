@@ -6,7 +6,9 @@ const KEY = process.env.KEY;
 const genAI = new GoogleGenerativeAI(KEY);
 const cors = require('cors');
 
-const allowedOrigins = ["https://calm-compass.onrender.com"];
+//const allowedOrigins =  ["https://calm-compass.onrender.com"]
+const allowedOrigins = ["https://calm-compass.onrender.com", "http://localhost:3000"];
+
 
 const corsOptions = {
     origin: allowedOrigins,  // Solo permitir solicitudes desde este origen
@@ -25,7 +27,7 @@ const model = genAI.getGenerativeModel({
     },
 });
 
-app.use(cors(corsOptions));
+app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({extended:true}));
 var userMessages = [];
