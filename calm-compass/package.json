@@ -22,8 +22,10 @@
     "eject": "react-scripts eject",
     "dev": "concurrently \"npm run server\" \"npm run client\"",
     "server": "node server/server.js",
-    "client": "cross-env react-scripts start"
+    "client": "cross-env react-scripts start",
+    "render-postbuild": "react-scripts build"
   },
+  
   "eslintConfig": {
     "extends": [
       "react-app",
