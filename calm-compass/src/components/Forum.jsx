@@ -1,11 +1,16 @@
 import React from 'react';
+import { useMyContext } from '../context/Provider';
 
-function Forum(props){
-    return(
+function Forum({ title, description }) {
+    const { state } = useMyContext();
+    const email = state.email; 
+
+    return (
         <div className="forum">
-                <h2>{props.title}</h2>
-                <p>{props.description}</p>      
-        </div> 
+            <h3>{title}</h3>
+            <p>{description}</p>
+            <small>Posted by: {postMessage.author || 'Usuario no identificado'}</small>
+        </div>
     );
 }
 

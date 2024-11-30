@@ -58,18 +58,19 @@ async function signUp(dispatch,email,password,setError){
 
 }
 
-async function signIn(dispatch, email, password, setError) {
+async function signIn(dispatch, email, password) {
     try {
         const res = await axios.post(`${port.connection}/signIn`, { email, password });
 
+        
         dispatch({
             type: SIGN_IN,
-            payload: email,
+            payload: { email, name: res.data.name }, 
         });
 
-        localStorage.setItem('appState', JSON.stringify({ name: res.data.name, signin: true, email }));
+        localStorage.setItem('appState', JSON.stringify({ email, name: res.data.name, signin: true }));
     } catch (err) {
-        setError('Email or password is incorrect');
+        console.error('Error in signIn:', err.response || err);
     }
 }
 
@@ -84,35 +85,45 @@ async function signOut(dispatch){
     }
 }
 
-async function addPost(dispatch,title,description,name){
-    try{
-        const res = await api.post(`${port.connection}/addPost`,{title,description,name});
-          
+async function addPost(dispatch, title, description, email) {
+    try {
+        console.log("Sending post data:", { title, description, email }); // Debug
+        const res = await axios.post(`${port.connection}/addPost`, {
+            title,
+            description,
+            email,
+        });
+
+        console.log("Post response:", res.data); 
+
         dispatch({
-                type: ADD_POST,
-                payload: res.data.name
-            });
-                        
-    } catch(err){
-        console.log(err)
+            type: ADD_POST,
+            payload: { 
+                title, 
+                description, 
+                author: email 
+            },
+        });
+    } catch (err) {
+        console.error("Error in addPost:", err);
     }
 }
 
-async function getPosts(dispatch){
-    try{
-
+async function getPosts(dispatch) {
+    try {
         const res = await fetch(`${port.connection}/posts`);
-
         const data = await res.json();
+        console.log('Data received from API:', data); 
+
         dispatch({
             type: 'GETPOSTS',
-            payload: data
+            payload: data, 
         }); 
-                        
-    } catch(err){
-        console.log("Error");
+    } catch (err) {
+        console.log("Error in getPosts:", err);
     }
 }
+
 
 async function changePassword(dispatch,password,confirm,email,setError){
     try{
