@@ -1,5 +1,4 @@
-/calm-compass/node_modules/
-/server/node_modules/
-requirements.txt
+calm-compass/node_modules/
+calm-compass/server/node_modules/
 package-lock.json
 .env

@@ -2,7 +2,8 @@ require('dotenv').config();
 const express = require('express');
 const mongoose = require("mongoose");
 const { GoogleGenerativeAI } = require('@google/generative-ai');
-const genAI = new GoogleGenerativeAI('AIzaSyDT4TAwFAxCNwAwn8OPXC35kHZQkuaBdGc');
+const KEY = process.env.KEY;
+const genAI = new GoogleGenerativeAI(KEY);
 const cors = require('cors');
 
 const app = express();
