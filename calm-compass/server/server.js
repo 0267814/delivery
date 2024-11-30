@@ -9,7 +9,6 @@ const genAI = new GoogleGenerativeAI(KEY);
 //const allowedOrigins =  ["https://calm-compass.onrender.com"]
 // const allowedOrigins = ["https://calm-compass.onrender.com", "http://localhost:3000"];
 
-
 // const corsOptions = {
 //     origin: allowedOrigins,  // Solo permitir solicitudes desde este origen
 //     methods: ['GET', 'POST', 'PUT', 'DELETE'],
